@@ -61,8 +61,8 @@ Plugin.create(:mikutter_louise) do
       break if _a.size == 0
       num = rand(_a.size) # 乱数で次の文節を決定する
       break if _a[num]['end'] == "EOS"
-      sn = _a[num]['end'].size
-      break if (new_text.size + sn)/3 > 140
+      sn = _a[num]['end'].force_encoding('UTF-8').size
+      break if (new_text.force_encoding('UTF-8').size + sn) > 140
       # print _a[num]['end'],"\n"
       new_text = new_text + _a[num]['end']
       t1 = _a[num]['middle']
