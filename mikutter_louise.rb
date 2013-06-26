@@ -11,11 +11,16 @@ Plugin.create(:mikutter_louise) do
     
     require 'MeCab'
 
-    #f = open("./ruis.txt")
-    #text = f.read
-    #f.close
+    candidates = Dir.glob(File.expand_path(File.join(File.dirname(__FILE__), '*.txt')))
+    source_filename = candidates.select{|filename| File.file? filename }.sample
+    source_filename = '' unless source_filename
 
-    text = "ルイズ！ルイズ！ルイズ！ルイズぅぅうううわぁああああああああああああああああああああああん！！！
+    if File.exists? source_filename
+      f = open(source_filename)
+      text = f.read
+      f.close
+    else
+      text = "ルイズ！ルイズ！ルイズ！ルイズぅぅうううわぁああああああああああああああああああああああん！！！
 あぁああああ…ああ…あっあっー！あぁああああああ！！！ルイズルイズルイズぅううぁわぁああああ！！！
 あぁクンカクンカ！クンカクンカ！スーハースーハー！スーハースーハー！いい匂いだなぁ…くんくん
 んはぁっ！ルイズ・フランソワーズたんの桃色ブロンドの髪をクンカクンカしたいお！クンカクンカ！あぁあ！！
@@ -33,6 +38,7 @@ Plugin.create(:mikutter_louise) do
 あ、コミックのルイズちゃああああああああああああああん！！いやぁあああああああああああああああ！！！！
 あっあんああっああんあアン様ぁあ！！シ、シエスター！！アンリエッタぁああああああ！！！タバサｧぁあああ！！
 ううっうぅうう！！俺の想いよルイズへ届け！！ハルケギニアのルイズへ届け！"
+    end
 
     # mecabで形態素解析して、 参照テーブルを作る マルコフ連鎖で要約
     mecab = MeCab::Tagger.new("-Owakati")
